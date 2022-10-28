@@ -1,0 +1,50 @@
+﻿@using Web.ViewModels
+@model BlogViewModel
+
+<div class="container-fluid px-4">
+    <div class="card mb-4 mt-5">
+        <div class="card-body">
+            <table id="datatablesSimple">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>BlogId</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Language</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>BlogId</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>Language</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    @foreach (var item in Model.BlogLanguages)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.BlogId</td>
+                            <td>@item.Title</td>
+                            <td>@item.Content</td>
+                            <td>@item.Language</td>
+                            <td><a href="/admin/editblog/@item.Blog.Id" class="btn btn-warning">Edit</a></td>
+                            <td><button type="button" class="btn btn-danger" asp-action="DeleteBlog" asp-controller="Admin">Delete</button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div>
+        <a class="btn btn-primary bgupdate" asp-controller="Admin" asp-action="CreateBlog" id="myBtnAdd"><i class='fas fa-download'></i>Create New Blog</a>
+    </div>
+</div>
