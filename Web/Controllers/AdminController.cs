@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Web.Data;
 using Web.Models;
 using Web.ViewModels;
@@ -22,9 +23,16 @@ namespace Web.Controllers
 
             BlogViewModel blogViewModel = new()
             {
-                BlogLanguages=blogs
+                BlogLanguages = blogs
             };
             return View(blogViewModel);
+        }
+
+        public IActionResult GetLanguage(string language)
+        {
+            var blogs = _context.BlogLanguages.Where(x => x.Language == language).ToList();
+
+            return View(blogs);
         }
 
         public IActionResult CreateBlog()
@@ -33,7 +41,7 @@ namespace Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateBlog(Blog blog,List<string> Title,List<string> Content,List<string> Language)
+        public IActionResult CreateBlog(Blog blog, List<string> Title, List<string> Content, List<string> Language)
         {
             _context.Blogs.Add(blog);
             _context.SaveChanges();
@@ -50,26 +58,43 @@ namespace Web.Controllers
                 _context.BlogLanguages.Add(blogLanguage);
                 _context.SaveChanges();
             }
-            return RedirectToAction("BlogList","Admin");
+            return RedirectToAction("BlogList", "Admin");
         }
 
         [HttpGet]
-        public IActionResult EditBlog()
+        public IActionResult EditBlog(int id)
         {
-            var blogs = _context.Blogs.ToList();
-            var blogLanguages = _context.BlogLanguages.ToList();
-            BlogViewModel blogViewModel = new()
+            var blog = _context.Blogs.FirstOrDefault(x => x.Id == id);
+            var blogLanguages = _context.BlogLanguages.Where(x => x.Blog.Id == id).ToList();
+            EditBlogViewModel editViewModel = new()
             {
-                BlogLanguages=blogLanguages,
-                Blogs=blogs
+                BlogLanguages = blogLanguages,
+                Blog = blog
             };
-            return View(blogViewModel);
+            return View(editViewModel);
         }
 
         [HttpPost]
-        public IActionResult EditBlog(String a)
+        public IActionResult EditBlog(Blog blog, int blogId, List<string> title, List<string> content, List<int> languageId, List<string> language)
         {
-            return View();
+            blog.PhotoUrl = "pythonA.jpg";
+            _context.Blogs.Update(blog);
+            _context.SaveChanges();
+
+            for (int i = 0; i < title.Count; i++)
+            {
+                BlogLanguage blogLanguage = new()
+                {
+                    Id = languageId[i],
+                    BlogId=blogId,
+                    Title=title[i],
+                    Content = content[i],
+                    Language = language[i]
+                };
+                _context.BlogLanguages.Update(blogLanguage);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("BlogList", "Admin");
         }
     }
 }

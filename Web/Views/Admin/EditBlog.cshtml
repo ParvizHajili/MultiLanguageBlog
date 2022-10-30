@@ -1,12 +1,12 @@
 ﻿@using Web.ViewModels
-@model BlogViewModel
+@model EditBlogViewModel
 @{
     var count = 1;
 }
 
-<form method="post" enctype="multipart/form-data">
-@*    <input type="hidden" name="BlogId" value="@Model.Blogs.id" />
-*@    <div class="row">
+<form method="post" asp-action="EditBlog" asp-controller="Admin" enctype="multipart/form-data">
+    <input type="hidden" name="BlogId" value="@Model.Blog.Id" />
+    <div class="row">
         <div class="col-lg-8">
             <div class="card p-3">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -27,9 +27,9 @@
                             <p>Title</p>
                             <input class="form-control mb-2" name="Title" value="@item.Title" />
                             <p>Content</p>
-                            <textarea id="editor-@count" class="form-control mb-2" name="Description">@item.Content</textarea>
+                            <textarea id="editor-@count" class="form-control mb-2" name="Content">@item.Content</textarea>
                             <input type="hidden" name="Language" value="@item.Language" />
-                            @*<input type="hidden" name="LangID" value="@item.ID" />*@
+                            <input type="hidden" name="LanguageId" value="@item.Id" />
                         </div>
                         count++;
                     }
@@ -37,7 +37,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card">
+            @*<div class="card">
                 @foreach (var blog in Model.Blogs)
                 {
                     <div class="card-body">
@@ -47,7 +47,7 @@
             </div>
             <div class="card p-3 mt-3">
                 <input type="file" name="Image" />
-            </div>
+            </div>*@
             <div class="card p-3 mt-3">
                 <input class="btn btn-primary btn-sm" type="submit" value="Edit" />
             </div>
