@@ -9,6 +9,7 @@
                     <tr>
                         <th>Id</th>
                         <th>BlogId</th>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Content</th>
                         <th>Language</th>
@@ -20,6 +21,7 @@
                     <tr>
                         <th>Id</th>
                         <th>BlogId</th>
+                        <th>Image</th>
                         <th>Title</th>
                         <th>Content</th>
                         <th>Language</th>
@@ -33,11 +35,14 @@
                         <tr>
                             <td>@item.Id</td>
                             <td>@item.BlogId</td>
+                            <td>
+                                <img src="@item.Blog.PhotoUrl" width="200" />
+                            </td>
                             <td>@item.Title</td>
                             <td>@item.Content</td>
                             <td>@item.Language</td>
                             <td><a href="/admin/editblog/@item.Blog.Id" class="btn btn-warning">Edit</a></td>
-                            <td><button type="button" class="btn btn-danger" asp-action="DeleteBlog" asp-controller="Admin">Delete</button></td>
+                            <td><a href="/admin/deleteblog/@item.Blog.Id" class="btn btn-outline-danger">Delete</a></td>
                         </tr>
                     }
                 </tbody>

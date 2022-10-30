@@ -37,19 +37,17 @@
             </div>
         </div>
         <div class="col-lg-4">
-            @*<div class="card">
-                @foreach (var blog in Model.Blogs)
-                {
-                    <div class="card-body">
-                    <img class="img-fluid" src="@blog.PhotoUrl" />
+            <div class="card">
+
+                <div class="card-body">
+                    <img class="img-fluid" src="@Model.Blog.PhotoUrl" />
                 </div>
-                }
-            </div>
-            <div class="card p-3 mt-3">
-                <input type="file" name="Image" />
-            </div>*@
-            <div class="card p-3 mt-3">
-                <input class="btn btn-primary btn-sm" type="submit" value="Edit" />
+                <div class="card p-3 mt-3">
+                    <input type="file" name="PhotoUrl" />
+                </div>
+                <div class="card p-3 mt-3">
+                    <input class="btn btn-primary btn-sm" type="submit" value="Edit" />
+                </div>
             </div>
         </div>
     </div>
@@ -60,9 +58,9 @@
 
 <script>
     ClassicEditor
-            .create( document.querySelector('#editor-1') )
+        .create(document.querySelector('#editor-1'))
     ClassicEditor
-            .create( document.querySelector('#editor-2') )
+        .create(document.querySelector('#editor-2'))
     ClassicEditor
-            .create( document.querySelector('#editor-3') )
+        .create(document.querySelector('#editor-3'))
 </script>
